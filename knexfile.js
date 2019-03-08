@@ -6,6 +6,12 @@ module.exports = {
     useNullAsDefault: true,
     connection: {
       filename: './data/games.sqlite3'
+    },
+    migrations: {
+      directory: './data/migrations'
+    },
+    seeds: {
+      directory: './data/seeds'
     }
   },
   testing: {
@@ -13,6 +19,12 @@ module.exports = {
     useNullAsDefault: true,
     connection: {
       filename: './data/testingDb.sqlite3'
+    },
+    migrations: {
+      directory: './data/migrations'
+    },
+    seeds: {
+      directory: './data/seeds'
     }
   }
 };
