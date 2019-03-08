@@ -33,4 +33,16 @@ router.post('/', (req, res) => {
   }
 })
 
+router.delete('/:id', (req, res) => {
+  db.remove(req.params.id)
+    .then(count => {
+      if(count > 0) {
+        res.status(204).end();
+      } else {
+        res.status(404).json({message: 'The game you tried to delete was not found.'});
+      }
+    })
+    .catch(err => res.status(500).json({message: 'Could not delete this game at this time.', err}));
+})
+
 module.exports = router;

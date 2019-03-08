@@ -21,6 +21,31 @@ describe('gamesRouter.js', () => {
     })
   });
 
+  describe('GET /api/games/:id', () => {
+    beforeAll(async () => {
+      await db('games').insert({title: 'Pacman', genre: 'Arcade', releaseYear: 1980});
+    });
+
+    afterAll(async () => {
+      await db('games').truncate();
+    });
+
+    it('Should return 200 status code', async () => {
+      const res = await request(server).get('/api/games/1');
+      expect(res.status).toBe(200)
+    });
+
+    it('Should return json data', async () => {
+      const res = await request(server).get('/api/games/1');
+      expect(res.type).toBe('application/json')
+    });
+
+    it('Should return an object', async () => {
+      const res = await request(server).get('/api/games/1');
+      expect(typeof res.body).toBe('object')
+    })
+  });
+
   describe('POST /api/games', () => {
     afterEach(async () => {
       await db('games').truncate();

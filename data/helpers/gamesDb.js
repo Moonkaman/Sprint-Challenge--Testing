@@ -2,7 +2,8 @@ const db = require('../dbConfig');
 
 module.exports = {
   get,
-  add
+  add,
+  remove
 }
 
 function get(id) {
@@ -15,4 +16,8 @@ function get(id) {
 
 function add(game) {
   return db('games').insert(game);
+}
+
+function remove(id) {
+  return db('games').where({id: id}).del();
 }
