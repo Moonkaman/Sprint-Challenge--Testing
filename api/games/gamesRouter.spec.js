@@ -38,13 +38,13 @@ describe('gamesRouter.js', () => {
 
     it('Should return the new object on success', async () => {
       const res = await request(server).post('/api/games').send({title: 'Pacman', genre: 'Arcade', releaseYear: 1980});
-      expect(res.body).toEqual({title: 'Pacman', genre: 'Arcade', releaseYear: 1980});
+      expect(res.body).toEqual({id: 1, title: 'Pacman', genre: 'Arcade', releaseYear: 1980});
     })
 
-    it('Should return a 400 when trying to add a game thats already there', async () => {
+    it('Should return a 405 when trying to add a game thats already there', async () => {
       await request(server).post('/api/games').send({title: 'Pacman', genre: 'Arcade', releaseYear: 1980});
       const res = await request(server).post('/api/games').send({title: 'Pacman', genre: 'Arcade', releaseYear: 1980});
-      expect(res.status).toBe(400);
+      expect(res.status).toBe(405);
     })
   });
 });

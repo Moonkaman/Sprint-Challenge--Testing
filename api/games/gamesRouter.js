@@ -8,4 +8,29 @@ router.get('/', (req, res) => {
     .catch(err => res.status(500).json({message: 'Could not retrieve list of games at this time', err}));
 });
 
+router.get('/:id', (req, res) => {
+  db.get(req.params.id)
+    .then(game => res.status(200).json(game));
+})
+
+router.post('/', (req, res) => {
+  if(!req.body.title || !req.body.genre || !req.body.releaseYear) {
+    res.status(422).json({message: 'Please provide a title, genre & release year for the game.'})
+  } else {
+    db.add(req.body)
+      .then(id => {
+        db.get(id[0])
+          .then(newGame => res.status(201).json(newGame))
+          .catch(err => res.status(500).json({message: 'Could not retrieve the new game at this time.', err}))
+      })
+      .catch(err => {
+        if(err.errno === 19) {
+          res.status(405).json({message: 'This game title already exists.'})
+        } else {
+          res.status(500).json({message: 'Could not create a new game at this time.', err});
+        }
+    });
+  }
+})
+
 module.exports = router;

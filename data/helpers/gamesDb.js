@@ -5,8 +5,12 @@ module.exports = {
   add
 }
 
-function get() {
-  return db('games');
+function get(id) {
+  if(!id) {
+    return db('games');
+  } else {
+    return db('games').where({id: id}).first();
+  }
 }
 
 function add(game) {
