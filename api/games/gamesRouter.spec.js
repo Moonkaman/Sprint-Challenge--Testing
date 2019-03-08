@@ -72,4 +72,24 @@ describe('gamesRouter.js', () => {
       expect(res.status).toBe(405);
     })
   });
+
+  describe('DELETE /api/games/:id', () => {
+    beforeEach(async () => {
+      await db('games').insert({title: 'Pacman', genre: 'Arcade', releaseYear: 1980});
+    });
+
+    afterEach(async () => {
+      await db('games').truncate();
+    });
+
+    it('Should return 204 status code', async () => {
+      const res = await request(server).delete('/api/games/1');
+      expect(res.status).toBe(204)
+    });
+
+    it('Should return 404 on invalid status code', async () => {
+      const res = await request(server).delete('/api/games/2');
+      expect(res.status).toBe(404)
+    })
+  });
 });
