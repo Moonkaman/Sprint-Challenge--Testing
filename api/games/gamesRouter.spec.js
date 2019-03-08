@@ -17,7 +17,7 @@ describe('gamesRouter.js', () => {
 
     it('Should return an array', async () => {
       const res = await request(server).get('/api/games');
-      expect(typeof res).toBe('array')
+      expect(res.body.length).toBeDefined()
     })
   });
 
